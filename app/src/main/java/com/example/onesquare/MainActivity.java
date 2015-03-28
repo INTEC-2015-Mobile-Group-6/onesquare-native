@@ -63,32 +63,7 @@ public class MainActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            setUpTabs(rootView);
-
             return rootView;
-        }
-
-        private void setUpTabs(View rootView) {
-            TabHost tabHost = (TabHost) rootView.findViewById(R.id.tab_host);
-            tabHost.setup();
-
-            Resources resources = getResources();
-            String allCheckInsLabel = resources.getString(R.string.tab_all_check_ins);
-            String allCheckInsTabId = resources.getResourceName(R.id.all_check_ins_tab);
-            String favoriteCheckInsLabel = resources.getString(R.string.tab_fav_check_ins);
-            String favoriteCheckInsTabId = resources.getResourceName(R.id.fav_check_ins_tab);
-
-            TabHost.TabSpec allCheckInsTabSpec = tabHost.newTabSpec(allCheckInsTabId);
-            TabHost.TabSpec favoriteCheckInsTabSpec = tabHost.newTabSpec(favoriteCheckInsTabId);
-
-            allCheckInsTabSpec.setIndicator(allCheckInsLabel);
-            allCheckInsTabSpec.setContent(R.id.all_check_ins_tab);
-
-            favoriteCheckInsTabSpec.setIndicator(favoriteCheckInsLabel);
-            favoriteCheckInsTabSpec.setContent(R.id.fav_check_ins_tab);
-
-            tabHost.addTab(allCheckInsTabSpec);
-            tabHost.addTab(favoriteCheckInsTabSpec);
         }
     }
 }
