@@ -1,5 +1,6 @@
 package com.example.onesquare;
 
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
+
+import java.util.ResourceBundle;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -52,9 +55,6 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class CheckInListFragment extends Fragment {
 
-        private static final String TAB_ALL_CHECK_INS = "all_check_ins_tab";
-        private static final String TAB_FAV_CHECK_INS = "fav_check_ins_tab";
-
         public CheckInListFragment() {
         }
 
@@ -72,16 +72,18 @@ public class MainActivity extends ActionBarActivity {
             TabHost tabHost = (TabHost) rootView.findViewById(R.id.tab_host);
             tabHost.setup();
 
-            TabHost.TabSpec allCheckInsTabSpec = tabHost.newTabSpec(TAB_ALL_CHECK_INS);
-            TabHost.TabSpec favoriteCheckInsTabSpec = tabHost.newTabSpec(TAB_FAV_CHECK_INS);
+            Resources resources = getResources();
+            String allCheckInsLabel = resources.getString(R.string.tab_all_check_ins);
+            String allCheckInsTabId = resources.getResourceName(R.id.all_check_ins_tab);
+            String favoriteCheckInsLabel = resources.getString(R.string.tab_fav_check_ins);
+            String favoriteCheckInsTabId = resources.getResourceName(R.id.fav_check_ins_tab);
 
-            String allCheckInsLabel = getResources()
-                    .getString(R.string.tab_all_check_ins);
+            TabHost.TabSpec allCheckInsTabSpec = tabHost.newTabSpec(allCheckInsTabId);
+            TabHost.TabSpec favoriteCheckInsTabSpec = tabHost.newTabSpec(favoriteCheckInsTabId);
+
             allCheckInsTabSpec.setIndicator(allCheckInsLabel);
             allCheckInsTabSpec.setContent(R.id.all_check_ins_tab);
 
-            String favoriteCheckInsLabel = getResources()
-                    .getString(R.string.tab_fav_check_ins);
             favoriteCheckInsTabSpec.setIndicator(favoriteCheckInsLabel);
             favoriteCheckInsTabSpec.setContent(R.id.fav_check_ins_tab);
 
