@@ -111,7 +111,7 @@ public class CheckInListFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(mCheckInArrayAdapter.getItem(position).getId());
         }
     }
 
@@ -138,7 +138,7 @@ public class CheckInListFragment extends ListFragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onFragmentInteraction(int id);
     }
 
     private class InverseCheckInDateComparator implements Comparator<CheckIn> {

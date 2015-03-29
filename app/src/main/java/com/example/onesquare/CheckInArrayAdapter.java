@@ -35,6 +35,11 @@ public class CheckInArrayAdapter extends ArrayAdapter<CheckIn> {
     }
 
     @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CheckIn checkIn = mCheckInList.get(position);
 

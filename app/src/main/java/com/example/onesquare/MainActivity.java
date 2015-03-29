@@ -9,20 +9,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.onesquare.model.CheckIn;
-
 import java.util.Locale;
-
 
 public class MainActivity extends ActionBarActivity
         implements ActionBar.TabListener, CheckInListFragment.OnFragmentInteractionListener {
-    @Override
-    public void onFragmentInteraction(String id) {
 
-    }
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     CheckInListPagerAdapter mCheckInListPagerAdapter;
     ViewPager mViewPager;
@@ -92,6 +88,11 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+    }
+
+    @Override
+    public void onFragmentInteraction(int id) {
+        Log.d(TAG, "selected check in id: " + id);
     }
 
     private class CheckInListPagerAdapter extends FragmentPagerAdapter {
