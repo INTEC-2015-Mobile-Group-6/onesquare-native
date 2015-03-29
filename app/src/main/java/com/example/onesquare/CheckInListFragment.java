@@ -2,14 +2,9 @@ package com.example.onesquare;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.ListView;
 
 
@@ -67,31 +62,11 @@ public class CheckInListFragment extends ListFragment {
         ArrayList<CheckIn> allCheckIns = new ArrayList<>();
         allCheckIns.addAll(defaultCheckIns);
 
-        mCheckInArrayAdapter = new ArrayAdapter<CheckIn>(
+        mCheckInArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1
-        ){
-            @Override
-            public void sort(Comparator comparator) {
-                super.sort(new Comparator<CheckIn>() {
-                    @Override
-                    public int compare(CheckIn checkIn, CheckIn checkIn2) {
-                        Date firstCheckInDate = checkIn.getDate();
-                        Date secondCheckInDate = checkIn2.getDate();
-
-                        int result = -1 * firstCheckInDate.compareTo(secondCheckInDate);
-
-                        Log.d(TAG, String.format("%s compared to %s: %d",
-                                firstCheckInDate, secondCheckInDate, result));
-
-                        return result;
-                    }
-                });
-
-                notifyDataSetChanged();
-            }
-        };
+        );
 
         if (filterByFavorite) {
             ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
@@ -109,7 +84,7 @@ public class CheckInListFragment extends ListFragment {
             mCheckInArrayAdapter.addAll(allCheckIns);
         }
 
-        mCheckInArrayAdapter.sort(null);
+        mCheckInArrayAdapter.sort(new InverseCheckInDateComparator());
     }
 
     @Override
@@ -167,4 +142,16 @@ public class CheckInListFragment extends ListFragment {
         public void onFragmentInteraction(String id);
     }
 
+    private class InverseCheckInDateComparator implements Comparator<CheckIn> {
+        private static final int INVERSE_QUANTIFIER = -1;
+
+        @Override
+        public int compare(CheckIn c1, CheckIn c2) {
+            Date checkInDate1 = c1.getDate();
+            Date checkInDate2 = c2.getDate();
+
+            return checkInDate1.compareTo(checkInDate2)
+                    * INVERSE_QUANTIFIER;
+        }
+    }
 }
