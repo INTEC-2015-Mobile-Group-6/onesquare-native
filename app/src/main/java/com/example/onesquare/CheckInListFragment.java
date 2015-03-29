@@ -3,13 +3,9 @@ package com.example.onesquare;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-
 
 import com.example.onesquare.dummy.DummyContent;
 import com.example.onesquare.model.CheckIn;
