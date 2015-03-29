@@ -1,29 +1,58 @@
 package com.example.onesquare;
 
 import android.content.res.Resources;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TabHost;
 
-import java.util.ResourceBundle;
+import com.example.onesquare.model.CheckIn;
+
+import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+        implements ActionBar.TabListener, CheckInListFragment.OnFragmentInteractionListener {
+    @Override
+    public void onFragmentInteraction(String id) {
+
+    }
+
+    CheckInListPagerAdapter mCheckInListPagerAdapter;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CheckInListFragment())
-                    .commit();
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        mCheckInListPagerAdapter =  new CheckInListPagerAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mCheckInListPagerAdapter);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
+
+        for (int i = 0; i < mCheckInListPagerAdapter.getCount(); i++) {
+            ActionBar.Tab tab = actionBar.newTab();
+            tab.setText(mCheckInListPagerAdapter.getPageTitle(i))
+                    .setTabListener(this);
+
+            actionBar.addTab(tab);
         }
     }
 
@@ -50,20 +79,66 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class CheckInListFragment extends Fragment {
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
 
-        public CheckInListFragment() {
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    private class CheckInListPagerAdapter extends FragmentPagerAdapter {
+        private static final int POSITION_ALL_CHECK_INS = 0;
+        private static final int POSITION_FAV_CHECK_INS = 1;
+
+        public CheckInListPagerAdapter(FragmentManager supportFragmentManager) {
+            super(supportFragmentManager);
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        public int getCount() {
+            return 2;
+        }
 
-            return rootView;
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String result = null;
+
+            Resources resources = getResources();
+            Locale locale = Locale.getDefault();
+
+            switch (position) {
+                case POSITION_ALL_CHECK_INS:
+                    result = resources.getString(R.string.tab_all_check_ins);
+                    break;
+                case POSITION_FAV_CHECK_INS:
+                    result = resources.getString(R.string.tab_fav_check_ins);
+                    break;
+            }
+
+            return result != null ? result.toUpperCase(locale) : null;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+           CheckInListFragment result = null;
+
+            switch (position) {
+                case POSITION_ALL_CHECK_INS:
+                    result = CheckInListFragment.newInstance(false);
+                    break;
+                case POSITION_FAV_CHECK_INS:
+                    result = CheckInListFragment.newInstance(true);
+            }
+
+           return result;
         }
     }
 }
