@@ -72,4 +72,9 @@ public class CheckIn {
     public void setFavorite(boolean isFavorite) {
         isFavorite = isFavorite;
     }
+
+    @Override
+    public String toString() {
+        return address + " " + place;
+    }
 }
