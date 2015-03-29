@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.onesquare.model.CheckIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -31,10 +33,12 @@ public class CheckInListFragment extends ListFragment {
     private static final String ARG_IS_FILTERED_BY_FAVORITE = "is_filtered_by_favorite";
     private static final CheckIn[] DUMMY_CHECK_INS = {
             new CheckIn(new Date(), "Santo Domingo", "Chef Pepper", null, null, true),
-            new CheckIn(new Date(2015, 1, 13), "Samaná", "Bahía de las aguilas", null, null, true),
-            new CheckIn(new Date(2015, 2, 7), "Santiago", "El monumento", null, null, false),
-            new CheckIn(new Date(2015, 3, 1), "Puerto Plata", "La boca", null, null, false)
+            new CheckIn(new Date(2015 - 1900, 0, 13), "Samaná", "Bahía de las aguilas", null, null, true),
+            new CheckIn(new Date(2015 - 1900, 1, 7), "Santiago", "El monumento", null, null, false),
+            new CheckIn(new Date(2015 - 1900, 2, 1), "Puerto Plata", "La boca", null, null, false)
     };
+    private static final String TAG = CheckInListFragment.class.getSimpleName();
+
     private OnFragmentInteractionListener mListener;
     private ArrayAdapter<CheckIn> mCheckInArrayAdapter;
 
@@ -63,11 +67,31 @@ public class CheckInListFragment extends ListFragment {
         ArrayList<CheckIn> allCheckIns = new ArrayList<>();
         allCheckIns.addAll(defaultCheckIns);
 
-        mCheckInArrayAdapter = new ArrayAdapter<>(
+        mCheckInArrayAdapter = new ArrayAdapter<CheckIn>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1
-        );
+        ){
+            @Override
+            public void sort(Comparator comparator) {
+                super.sort(new Comparator<CheckIn>() {
+                    @Override
+                    public int compare(CheckIn checkIn, CheckIn checkIn2) {
+                        Date firstCheckInDate = checkIn.getDate();
+                        Date secondCheckInDate = checkIn2.getDate();
+
+                        int result = -1 * firstCheckInDate.compareTo(secondCheckInDate);
+
+                        Log.d(TAG, String.format("%s compared to %s: %d",
+                                firstCheckInDate, secondCheckInDate, result));
+
+                        return result;
+                    }
+                });
+
+                notifyDataSetChanged();
+            }
+        };
 
         if (filterByFavorite) {
             ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
@@ -84,6 +108,8 @@ public class CheckInListFragment extends ListFragment {
         } else {
             mCheckInArrayAdapter.addAll(allCheckIns);
         }
+
+        mCheckInArrayAdapter.sort(null);
     }
 
     @Override
