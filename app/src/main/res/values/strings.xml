@@ -8,4 +8,12 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="action_add_check_in">Add</string>
     <string name="title_activity_add_check_in">AddCheckInActivity</string>
+    <string name="label_place_name">Place</string>
+    <string name="label_place_address">Address</string>
+    <string name="label_place_date">Date</string>
+    <string name="hint_check_in_place">e.g: Chef Pepper</string>
+    <string name="hint_check_in_address">e.g: Santo Domingo</string>
+    <string name="hint_check_in_date">e.g: 4/29/2015</string>
+    <string name="label_place_is_favorite">Favorite?</string>
+    <string name="label_check_in_is_favorite">Favorite?</string>
 </resources>

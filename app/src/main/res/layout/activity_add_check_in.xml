@@ -1,4 +1,64 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context="com.example.onesquare.AddCheckInActivity" tools:ignore="MergeRootFrame" />
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    tools:context="com.example.onesquare.AddCheckInActivity" tools:ignore="MergeRootFrame"
+    android:orientation="vertical"
+    android:padding="12dp">
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="@string/label_place_name"
+                style="@style/Base.TextAppearance.AppCompat.Display1"
+                android:layout_gravity="center_horizontal" />
+            <EditText android:id="@+id/add_check_in_place_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:layout_weight="1"
+                android:hint="@string/hint_check_in_place">
+                <requestFocus />
+            </EditText>
+        </TableRow>
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="@string/label_place_address"
+                style="@style/Base.TextAppearance.AppCompat.Display1"
+                android:layout_gravity="center_horizontal" />
+            <EditText android:id="@+id/add_check_in_place_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress|textCapSentences"
+                android:layout_weight="1"
+                android:hint="@string/hint_check_in_address"/>
+        </TableRow>
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="@string/label_place_date"
+                style="@style/Base.TextAppearance.AppCompat.Display1"
+                android:layout_gravity="center_horizontal" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/add_check_in_date"
+                android:layout_weight="1"
+                android:hint="@string/hint_check_in_date"/>
+
+        </TableRow>
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="@string/label_check_in_is_favorite"
+                style="@style/Base.TextAppearance.AppCompat.Display1"
+                android:layout_gravity="center_horizontal" />
+            <CheckBox android:id="@+id/add_check_in_is_favorite"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </TableRow>
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
