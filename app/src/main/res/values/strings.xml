@@ -7,4 +7,5 @@
     <string name="tab_fav_check_ins">Favorite</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="action_add_check_in">Add</string>
+    <string name="title_activity_add_check_in">AddCheckInActivity</string>
 </resources>

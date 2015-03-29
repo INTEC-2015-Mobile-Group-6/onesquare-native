@@ -1,5 +1,6 @@
 package com.example.onesquare;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -72,7 +73,20 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
 
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_add_check_in:
+                openAddCheckActivity();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openAddCheckActivity() {
+        Intent intent = new Intent(this, AddCheckInActivity.class);
+
+        startActivity(intent);
     }
 
     @Override
