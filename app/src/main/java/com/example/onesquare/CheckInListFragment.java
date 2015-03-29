@@ -16,6 +16,7 @@ import com.example.onesquare.dummy.DummyContent;
 import com.example.onesquare.model.CheckIn;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -28,6 +29,12 @@ import java.util.Date;
 public class CheckInListFragment extends ListFragment {
 
     private static final String ARG_IS_FILTERED_BY_FAVORITE = "is_filtered_by_favorite";
+    private static final CheckIn[] DUMMY_CHECK_INS = {
+            new CheckIn(new Date(), "Santo Domingo", "Chef Pepper", null, null, true),
+            new CheckIn(new Date(2015, 1, 13), "Samaná", "Bahía de las aguilas", null, null, true),
+            new CheckIn(new Date(2015, 2, 7), "Santiago", "El monumento", null, null, false),
+            new CheckIn(new Date(2015, 3, 1), "Puerto Plata", "La boca", null, null, false)
+    };
     private OnFragmentInteractionListener mListener;
     private ArrayAdapter<CheckIn> mCheckInArrayAdapter;
 
@@ -45,11 +52,7 @@ public class CheckInListFragment extends ListFragment {
         Bundle args = getArguments();
         boolean isFilteredByFavorite = args.getBoolean(ARG_IS_FILTERED_BY_FAVORITE);
 
-        ArrayList<CheckIn> defaultCheckIns = new ArrayList<>();
-        defaultCheckIns.add(new CheckIn(new Date(), "Santo Domingo", "Chef Pepper", null, null, true));
-        defaultCheckIns.add(new CheckIn(new Date(), "Samaná", "Bahía de las aguilas", null, null, true));
-        defaultCheckIns.add(new CheckIn(new Date(), "Santiago", "El monumento", null, null, false));
-        defaultCheckIns.add(new CheckIn(new Date(), "Puerto Plata", "La boca", null, null, false));
+        ArrayList<CheckIn> defaultCheckIns = new ArrayList<>(Arrays.asList(DUMMY_CHECK_INS));
 
         ArrayList<CheckIn> allCheckIns = new ArrayList<>();
         ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
