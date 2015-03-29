@@ -50,21 +50,18 @@ public class CheckInListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        boolean isFilteredByFavorite = args.getBoolean(ARG_IS_FILTERED_BY_FAVORITE);
+        boolean filterByFavorite = args.getBoolean(ARG_IS_FILTERED_BY_FAVORITE);
 
+        setUpListAdapter(filterByFavorite);
+
+        setListAdapter(mCheckInArrayAdapter);
+    }
+
+    private void setUpListAdapter(boolean filterByFavorite) {
         ArrayList<CheckIn> defaultCheckIns = new ArrayList<>(Arrays.asList(DUMMY_CHECK_INS));
 
         ArrayList<CheckIn> allCheckIns = new ArrayList<>();
-        ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
-
         allCheckIns.addAll(defaultCheckIns);
-        for (int i = 0; i < defaultCheckIns.size(); i++) {
-            CheckIn checkIn = defaultCheckIns.get(i);
-
-            if (checkIn.isFavorite()) {
-                favoriteCheckIns.add(checkIn);
-            }
-        }
 
         mCheckInArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
@@ -72,15 +69,22 @@ public class CheckInListFragment extends ListFragment {
                 android.R.id.text1
         );
 
-        if (isFilteredByFavorite) {
+        if (filterByFavorite) {
+            ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
+
+            for (int i = 0; i < defaultCheckIns.size(); i++) {
+                CheckIn checkIn = defaultCheckIns.get(i);
+
+                if (checkIn.isFavorite()) {
+                    favoriteCheckIns.add(checkIn);
+                }
+            }
+
             mCheckInArrayAdapter.addAll(favoriteCheckIns);
         } else {
             mCheckInArrayAdapter.addAll(allCheckIns);
         }
-
-        setListAdapter(mCheckInArrayAdapter);
     }
-
 
     @Override
     public void onAttach(Activity activity) {
