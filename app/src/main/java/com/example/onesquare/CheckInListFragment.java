@@ -3,9 +3,12 @@ package com.example.onesquare;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.example.onesquare.dummy.DummyContent;
@@ -62,7 +65,7 @@ public class CheckInListFragment extends ListFragment {
         ArrayList<CheckIn> allCheckIns = new ArrayList<>();
         allCheckIns.addAll(defaultCheckIns);
 
-        mCheckInArrayAdapter = new ArrayAdapter<>(
+        mCheckInArrayAdapter = new CheckInArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1
