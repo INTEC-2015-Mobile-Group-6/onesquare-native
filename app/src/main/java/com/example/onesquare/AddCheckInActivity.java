@@ -1,7 +1,6 @@
 package com.example.onesquare;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 
 public class AddCheckInActivity extends ActionBarActivity {
@@ -20,7 +21,7 @@ public class AddCheckInActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_check_in);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new AddCheckInFormFragment())
                     .commit();
         }
     }
@@ -51,16 +52,40 @@ public class AddCheckInActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class AddCheckInFormFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        private EditText mPlaceEdit;
+        private EditText mAddressEdit;
+        private EditText mDateEdit;
+        private EditText mURLEdit;
+        private Button mPictureURLButton;
+        private CheckBox mIsFavoriteCheckBox;
+
+        public AddCheckInFormFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_add_check_in, container, false);
+
+            mPlaceEdit = (EditText) rootView.findViewById(R.id.add_check_in_place_name);
+            mAddressEdit = (EditText) rootView.findViewById(R.id.add_check_in_place_address);
+            mDateEdit = (EditText) rootView.findViewById(R.id.add_check_in_date);
+            mURLEdit = (EditText) rootView.findViewById(R.id.add_check_in_url);
+            mPictureURLButton =
+                    (Button) rootView.findViewById(R.id.add_check_in_add_picture_button);
+            mIsFavoriteCheckBox = (CheckBox) rootView.findViewById(R.id.add_check_in_is_favorite);
+            
+            setUpInputValidation(mPlaceEdit, mAddressEdit, mDateEdit, mURLEdit);
+
             return rootView;
+        }
+
+        private void setUpInputValidation(EditText... editTexts) {
+            for (int i = 0; i < editTexts.length; i++) {
+                editTexts[i].addTextChangedListener(new FieldIsRequiredValidator(editTexts[i]));
+            }
         }
     }
 }
