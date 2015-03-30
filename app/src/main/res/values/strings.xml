@@ -16,4 +16,10 @@
     <string name="hint_check_in_date">e.g: 4/29/2015</string>
     <string name="label_place_is_favorite">Favorite?</string>
     <string name="label_check_in_is_favorite">Favorite?</string>
+    <string name="label_check_in_picture">Picture</string>
+    <string name="add_check_in_picture_url_button_text">Choose image</string>
+    <string name="label_check_in_url">URL</string>
+    <string name="hint_check_in_url">http://www.chefpepper.com.do/</string>
+    <string name="add_check_in_clear_button_text">Clear</string>
+    <string name="add_check_in_save_button_text">Save</string>
 </resources>
