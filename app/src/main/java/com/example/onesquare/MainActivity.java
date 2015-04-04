@@ -27,7 +27,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -41,13 +40,29 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        switch (item.getItemId()) {
+            /*case R.id.action_red:
+                // Red item was selected
+                return true;
+                */
+            case R.id.action_settings:
+                System.exit(0);
+                // Green item was selected
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+/*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            System.exit(0);
             return true;
         }
-
+        if (id == R.id.action_add){
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+*/
     }
 
     /**
