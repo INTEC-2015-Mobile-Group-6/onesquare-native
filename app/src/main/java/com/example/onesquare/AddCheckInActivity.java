@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.onesquare.model.CheckIn;
 
@@ -135,7 +136,11 @@ public class AddCheckInActivity extends ActionBarActivity {
 
                     Log.d(TAG, "Check in created: " + newCheckIn);
 
-                    // TODO-francisbrito: Notify user check in was created.
+                    Toast.makeText(
+                            getActivity(),
+                            R.string.message_check_in_created,
+                            Toast.LENGTH_SHORT
+                    ).show();
                     // TODO-francisbrito: Store check in into database.
                     // TODO-francisbrito: Redirect user to main activity.
                 }
