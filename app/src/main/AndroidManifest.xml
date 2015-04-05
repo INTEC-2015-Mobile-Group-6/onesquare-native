@@ -28,6 +28,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onesquare.MainActivity" />
         </activity>
+
+        <provider
+            android:name=".CheckInContentProvider"
+            android:authorities="com.example.onesquare"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>
