@@ -18,8 +18,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.example.onesquare.model.CheckIn;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddCheckInActivity extends ActionBarActivity {
@@ -66,6 +71,7 @@ public class AddCheckInActivity extends ActionBarActivity {
         private static final int SELECT_PHOTO = 1;
         private static final String TAG = AddCheckInFormFragment.class.getSimpleName();
         private static final String STRING_EMPTY = "";
+        private static final String STRING_DATE_FORMAT = "M/d/y";
 
         private EditText mPlaceEdit;
         private EditText mAddressEdit;
@@ -74,6 +80,8 @@ public class AddCheckInActivity extends ActionBarActivity {
         private Button mPictureURLButton;
         private CheckBox mIsFavoriteCheckBox;
         private Button mClearButton;
+        private Button mSaveButton;
+        private Uri mPictureURL;
 
         public AddCheckInFormFragment() {
         }
@@ -89,14 +97,49 @@ public class AddCheckInActivity extends ActionBarActivity {
             mURLEdit = (EditText) rootView.findViewById(R.id.add_check_in_url);
             mPictureURLButton =
                     (Button) rootView.findViewById(R.id.add_check_in_add_picture_button);
-            mIsFavoriteCheckBox = (CheckBox) rootView.findViewById(R.id.add_check_in_is_favorite);
+            mIsFavoriteCheckBox =
+                    (CheckBox) rootView.findViewById(R.id.add_check_in_is_favorite);
             mClearButton = (Button) rootView.findViewById(R.id.add_check_in_clear_button);
+            mSaveButton = (Button) rootView.findViewById(R.id.add_check_in_save_button);
             
             setUpInputValidation(mPlaceEdit, mAddressEdit, mDateEdit, mURLEdit);
             setUpPicturePicker(mPictureURLButton);
             setUpClearButton(mClearButton);
+            setUpSaveButton(mSaveButton);
 
             return rootView;
+        }
+
+        private void setUpSaveButton(Button saveButton) {
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String place = mPlaceEdit.getEditableText().toString();
+                    String address = mAddressEdit.getEditableText().toString();
+                    String dateString = mDateEdit.getEditableText().toString();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(STRING_DATE_FORMAT);
+                    Date date = null;
+                    String urlString = mURLEdit.getEditableText().toString();
+                    Uri url = Uri.parse(urlString);
+                    Uri pictureUrl = mPictureURL;
+                    boolean isFavorite = mIsFavoriteCheckBox.isChecked();
+
+                    try {
+                        date = dateFormat.parse(dateString);
+                    } catch (ParseException e) {
+                        Log.e(TAG, "Unable to parse date.", e);
+                    }
+
+                    CheckIn newCheckIn =
+                            CheckIn.create(place, address, date, url, pictureUrl, isFavorite);
+
+                    Log.d(TAG, "Check in created: " + newCheckIn);
+
+                    // TODO-francisbrito: Notify user check in was created.
+                    // TODO-francisbrito: Store check in into database.
+                    // TODO-francisbrito: Redirect user to main activity.
+                }
+            });
         }
 
         private void setUpClearButton(Button clearButton) {
@@ -136,9 +179,9 @@ public class AddCheckInActivity extends ActionBarActivity {
             switch (requestCode) {
                 case SELECT_PHOTO:
                     if (resultCode == RESULT_OK) {
-                        Uri imageUri = data.getData();
+                        mPictureURL = data.getData();
 
-                        // TODO-francisbrito: Set check-in's picture URL to imageUri.
+                        // TODO-francisbrito: Notify user picture was selected successfully.
                     }
             }
         }

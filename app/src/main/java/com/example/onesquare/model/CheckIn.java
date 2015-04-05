@@ -1,5 +1,7 @@
 package com.example.onesquare.model;
 
+import android.net.Uri;
+
 import java.net.URL;
 import java.util.Date;
 
@@ -10,13 +12,13 @@ public class CheckIn {
     private Date date;
     private String address;
     private String place;
-    private URL url;
-    private URL pictureURL;
+    private Uri url;
+    private Uri pictureURL;
     private boolean isFavorite;
     private int id;
 
-    public CheckIn(int id, Date date, String address, String place, URL url,
-                   URL pictureURL, boolean isFavorite) {
+    public CheckIn(int id, Date date, String address, String place, Uri url,
+                   Uri pictureURL, boolean isFavorite) {
         this.id = id;
         this.date = date;
         this.address = address;
@@ -26,8 +28,8 @@ public class CheckIn {
         this.isFavorite = isFavorite;
     }
 
-    public CheckIn(Date date, String address, String place, URL url,
-                   URL pictureURL, boolean isFavorite) {
+    public CheckIn(Date date, String address, String place, Uri url,
+                   Uri pictureURL, boolean isFavorite) {
         this(-1, date, address, place, url, pictureURL, isFavorite);
     }
 
@@ -55,19 +57,19 @@ public class CheckIn {
         this.place = place;
     }
 
-    public URL getUrl() {
+    public Uri getUrl() {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(Uri url) {
         this.url = url;
     }
 
-    public URL getPictureURL() {
+    public Uri getPictureURL() {
         return pictureURL;
     }
 
-    public void setPictureURL(URL pictureURL) {
+    public void setPictureURL(Uri pictureURL) {
         this.pictureURL = pictureURL;
     }
 
@@ -86,5 +88,10 @@ public class CheckIn {
 
     public int getId() {
         return id;
+    }
+
+    public static CheckIn create(String place, String address, Date date, Uri url,
+                                 Uri pictureUrl, boolean isFavorite) {
+        return new CheckIn(date, address, place, url, pictureUrl, isFavorite);
     }
 }
