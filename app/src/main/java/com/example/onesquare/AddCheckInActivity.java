@@ -1,8 +1,14 @@
 package com.example.onesquare;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 
 public class AddCheckInActivity extends ActionBarActivity {
@@ -54,6 +63,9 @@ public class AddCheckInActivity extends ActionBarActivity {
      */
     public static class AddCheckInFormFragment extends Fragment {
 
+        private static final int SELECT_PHOTO = 1;
+        private static final String TAG = AddCheckInFormFragment.class.getSimpleName();
+
         private EditText mPlaceEdit;
         private EditText mAddressEdit;
         private EditText mDateEdit;
@@ -78,13 +90,39 @@ public class AddCheckInActivity extends ActionBarActivity {
             mIsFavoriteCheckBox = (CheckBox) rootView.findViewById(R.id.add_check_in_is_favorite);
             
             setUpInputValidation(mPlaceEdit, mAddressEdit, mDateEdit, mURLEdit);
+            setUpPicturePicker(mPictureURLButton);
 
             return rootView;
+        }
+
+        private void setUpPicturePicker(Button pictureURLButton) {
+            pictureURLButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent pickPictureIntent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPictureIntent, SELECT_PHOTO);
+                }
+            });
         }
 
         private void setUpInputValidation(EditText... editTexts) {
             for (int i = 0; i < editTexts.length; i++) {
                 editTexts[i].addTextChangedListener(new FieldIsRequiredValidator(editTexts[i]));
+            }
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            switch (requestCode) {
+                case SELECT_PHOTO:
+                    if (resultCode == RESULT_OK) {
+                        Uri imageUri = data.getData();
+
+                        // TODO-francisbrito: Set check-in's picture URL to imageUri.
+                    }
             }
         }
     }
