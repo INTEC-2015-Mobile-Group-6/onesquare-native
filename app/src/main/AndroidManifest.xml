@@ -20,6 +20,14 @@
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
+        <activity
+            android:name=".AddCheckInActivity"
+            android:label="@string/title_activity_add_check_in"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.onesquare.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -2,11 +2,27 @@
 <resources>
     <string name="app_name">OneSquare</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Exit</string>
+    <string name="action_exit">Exit</string>
     <string name="action_view">View all</string>
     <string name="action_faview">View favorites</string>
     <string name="tab_all_check_ins">All</string>
     <string name="tab_fav_check_ins">Favorite</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="action_add_check_in">Add</string>
+    <string name="title_activity_add_check_in">AddCheckInActivity</string>
+    <string name="label_place_name">Place</string>
+    <string name="label_place_address">Address</string>
+    <string name="label_place_date">Date</string>
+    <string name="hint_check_in_place">e.g: Chef Pepper</string>
+    <string name="hint_check_in_address">e.g: Santo Domingo</string>
+    <string name="hint_check_in_date">e.g: 4/29/2015</string>
+    <string name="label_place_is_favorite">Favorite?</string>
+    <string name="label_check_in_is_favorite">Favorite?</string>
+    <string name="label_check_in_picture">Picture</string>
+    <string name="add_check_in_picture_url_button_text">Choose image</string>
+    <string name="label_check_in_url">URL</string>
+    <string name="hint_check_in_url">http://www.chefpepper.com.do/</string>
+    <string name="add_check_in_clear_button_text">Clear</string>
+    <string name="add_check_in_save_button_text">Save</string>
     <string name="add">Add</string>
 </resources>

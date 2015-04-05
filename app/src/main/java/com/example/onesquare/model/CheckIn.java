@@ -13,16 +13,22 @@ public class CheckIn {
     private URL url;
     private URL pictureURL;
     private boolean isFavorite;
+    private int id;
 
-    public CheckIn(Date date, String address, String place, URL url,
+    public CheckIn(int id, Date date, String address, String place, URL url,
                    URL pictureURL, boolean isFavorite) {
+        this.id = id;
         this.date = date;
         this.address = address;
         this.place = place;
         this.url = url;
         this.pictureURL = pictureURL;
         this.isFavorite = isFavorite;
+    }
 
+    public CheckIn(Date date, String address, String place, URL url,
+                   URL pictureURL, boolean isFavorite) {
+        this(-1, date, address, place, url, pictureURL, isFavorite);
     }
 
     public Date getDate() {
@@ -71,5 +77,14 @@ public class CheckIn {
 
     public void setFavorite(boolean isFavorite) {
         isFavorite = isFavorite;
+    }
+
+    @Override
+    public String toString() {
+        return address + " " + place;
+    }
+
+    public int getId() {
+        return id;
     }
 }

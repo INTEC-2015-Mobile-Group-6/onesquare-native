@@ -1,16 +1,13 @@
 package com.example.onesquare;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 
 public class DetailActivity extends Activity {
@@ -46,7 +43,7 @@ public class DetailActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_exit) {
             return true;
         }
 
