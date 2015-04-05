@@ -67,29 +67,13 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (item.getItemId()) {
-            /*case R.id.action_red:
-                // Red item was selected
-                return true;
-                */
             case R.id.action_exit:
                 System.exit(0);
-                // Green item was selected
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-/*
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            System.exit(0);
-            return true;
-        }
-        if (id == R.id.action_add){
-            return true;
+            case R.id.action_add:
+                openAddCheckActivity();
         }
 
         return super.onOptionsItemSelected(item);
-*/
     }
 
     private void openAddCheckActivity() {
