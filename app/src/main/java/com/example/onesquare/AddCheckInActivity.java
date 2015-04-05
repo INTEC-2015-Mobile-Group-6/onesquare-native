@@ -65,6 +65,7 @@ public class AddCheckInActivity extends ActionBarActivity {
 
         private static final int SELECT_PHOTO = 1;
         private static final String TAG = AddCheckInFormFragment.class.getSimpleName();
+        private static final String STRING_EMPTY = "";
 
         private EditText mPlaceEdit;
         private EditText mAddressEdit;
@@ -72,6 +73,7 @@ public class AddCheckInActivity extends ActionBarActivity {
         private EditText mURLEdit;
         private Button mPictureURLButton;
         private CheckBox mIsFavoriteCheckBox;
+        private Button mClearButton;
 
         public AddCheckInFormFragment() {
         }
@@ -88,11 +90,26 @@ public class AddCheckInActivity extends ActionBarActivity {
             mPictureURLButton =
                     (Button) rootView.findViewById(R.id.add_check_in_add_picture_button);
             mIsFavoriteCheckBox = (CheckBox) rootView.findViewById(R.id.add_check_in_is_favorite);
+            mClearButton = (Button) rootView.findViewById(R.id.add_check_in_clear_button);
             
             setUpInputValidation(mPlaceEdit, mAddressEdit, mDateEdit, mURLEdit);
             setUpPicturePicker(mPictureURLButton);
+            setUpClearButton(mClearButton);
 
             return rootView;
+        }
+
+        private void setUpClearButton(Button clearButton) {
+            clearButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPlaceEdit.setText(STRING_EMPTY);
+                    mAddressEdit.setText(STRING_EMPTY);
+                    mDateEdit.setText(STRING_EMPTY);
+                    mURLEdit.setText(STRING_EMPTY);
+                    mIsFavoriteCheckBox.setChecked(false);
+                }
+            });
         }
 
         private void setUpPicturePicker(Button pictureURLButton) {
