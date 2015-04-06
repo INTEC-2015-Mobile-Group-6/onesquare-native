@@ -19,9 +19,9 @@ public final class CheckInContract {
         public static final String IS_FAVORITE = "is_favorite";
         public static final String _ID = "_id";
 
-        private static final String CONTENT_AUTHORITY = "com.example.onesquare";
+        public static final String CONTENT_AUTHORITY = "com.example.onesquare";
         private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-        private static final String PATH_CHECK_IN = "check-in";
+        public static final String PATH_CHECK_IN = "check-in";
 
         // For content providers.
         public static final Uri CONTENT_URI = BASE_CONTENT_URI
