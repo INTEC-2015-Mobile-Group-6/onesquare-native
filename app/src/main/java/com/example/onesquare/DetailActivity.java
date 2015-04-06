@@ -44,6 +44,7 @@ public class DetailActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
+            System.exit(0);
             return true;
         }
 

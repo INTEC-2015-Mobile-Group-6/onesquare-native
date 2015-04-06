@@ -58,6 +58,7 @@ public class AddCheckInActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
+            System.exit(0);
             return true;
         }
 
@@ -141,6 +142,22 @@ public class AddCheckInActivity extends ActionBarActivity {
                             R.string.message_check_in_created,
                             Toast.LENGTH_SHORT
                     ).show();
+                    // 
+                    // Si, ya se, no llamo una func. Anyway... Asi me aseguro que funciona bien. Att: franzax
+                      if( date != null && mPlaceEdit != null) {
+                          mPlaceEdit.setText(STRING_EMPTY);
+                          mAddressEdit.setText(STRING_EMPTY);
+                          mDateEdit.setText(STRING_EMPTY);
+                          mURLEdit.setText(STRING_EMPTY);
+                          mIsFavoriteCheckBox.setChecked(false);
+                          System.exit(0);
+                      }
+                      // -------------------- PS.: Como aun esta la funcion de guardar en DB,
+                      // --------------------      no se si realmente se guarda lo escrito,
+                      // --------------------      asi que please confirmar al hacer la funcion.
+                      // --------------------      Gracias por leer!
+                      // --------------------   ATT: franzax
+
                     // TODO-francisbrito: Store check in into database.
                     // TODO-francisbrito: Redirect user to main activity.
                 }
