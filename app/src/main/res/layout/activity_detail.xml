@@ -3,6 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="com.example.onesquare.DetailActivity" tools:ignore="MergeRootFrame" >
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="384dp"
@@ -10,4 +11,5 @@
         android:id="@+id/detailtext"
         android:layout_gravity="center"
         android:textSize="30dp"/>
+
 </FrameLayout>
