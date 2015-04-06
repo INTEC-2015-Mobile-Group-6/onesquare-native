@@ -1,5 +1,6 @@
 package com.example.onesquare;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.onesquare.model.CheckIn;
+import com.example.onesquare.model.CheckInContract.CheckInEntry;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -141,7 +143,22 @@ public class AddCheckInActivity extends ActionBarActivity {
                             R.string.message_check_in_created,
                             Toast.LENGTH_SHORT
                     ).show();
-                    // TODO-francisbrito: Store check in into database.
+
+                    ContentValues values = new ContentValues();
+                    values.put(CheckInEntry.PLACE, place);
+                    values.put(CheckInEntry.ADDRESS, address);
+                    values.put(CheckInEntry.DATE, date.toString());
+                    values.put(CheckInEntry.URL, url.toString());
+                    values.put(CheckInEntry.PICTURE_URL,
+                            pictureUrl == null ? "http://placehold.it/500" : pictureUrl.toString());
+                    values.put(CheckInEntry.IS_FAVORITE, isFavorite);
+
+                    getActivity()
+                            .getContentResolver()
+                            .insert(
+                                    CheckInEntry.CONTENT_URI,
+                                    values
+                            );
                     // TODO-francisbrito: Redirect user to main activity.
                 }
             });

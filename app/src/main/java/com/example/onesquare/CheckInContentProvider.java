@@ -68,8 +68,14 @@ public class CheckInContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
-        return false;
+        mDatabaseHelper = new CheckInDatabaseOpenHelper(
+                getContext(),
+                CheckInDatabaseOpenHelper.DATABASE_NAME,
+                null,
+                CheckInDatabaseOpenHelper.DATABASE_VERSION
+        );
+
+        return true;
     }
 
     @Override
@@ -87,7 +93,7 @@ public class CheckInContentProvider extends ContentProvider {
             case CHECK_IN:
                 String idString = uri.getLastPathSegment();
 
-                if (!selection.toUpperCase().contains("_ID")) {
+                if (selection != null && !selection.toUpperCase().contains("_ID")) {
                     selection += " _ID = ?";
 
                     List<String> selectionArgsList = Arrays.asList(selectionArgs);

@@ -1,17 +1,23 @@
 package com.example.onesquare;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.onesquare.dummy.DummyContent;
 import com.example.onesquare.model.CheckIn;
+import com.example.onesquare.model.CheckInContract;
+import com.example.onesquare.model.CheckInContract.CheckInEntry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -22,19 +28,14 @@ import java.util.Date;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class CheckInListFragment extends ListFragment {
+public class CheckInListFragment extends ListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String ARG_IS_FILTERED_BY_FAVORITE = "is_filtered_by_favorite";
-    private static final CheckIn[] DUMMY_CHECK_INS = {
-            new CheckIn(new Date(), "Santo Domingo", "Chef Pepper", null, null, true),
-            new CheckIn(new Date(2015 - 1900, 0, 13), "Samaná", "Bahía de las aguilas", null, null, true),
-            new CheckIn(new Date(2015 - 1900, 1, 7), "Santiago", "El monumento", null, null, false),
-            new CheckIn(new Date(2015 - 1900, 2, 1), "Puerto Plata", "La boca", null, null, false)
-    };
     private static final String TAG = CheckInListFragment.class.getSimpleName();
 
     private OnFragmentInteractionListener mListener;
-    private ArrayAdapter<CheckIn> mCheckInArrayAdapter;
+    private SimpleCursorAdapter mSimpleCheckInCursorAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,43 +48,27 @@ public class CheckInListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        boolean filterByFavorite = args.getBoolean(ARG_IS_FILTERED_BY_FAVORITE);
-
-        setUpListAdapter(filterByFavorite);
-
-        setListAdapter(mCheckInArrayAdapter);
+        mSimpleCheckInCursorAdapter = new SimpleCursorAdapter(
+                getActivity(),
+                R.layout.check_in_item,
+                null,
+                new String[] {
+                        CheckInEntry.PLACE,
+                        CheckInEntry.DATE
+                },
+                new int[] {
+                        R.id.check_in_place,
+                        R.id.check_in_date
+                },
+                0
+        );
     }
 
-    private void setUpListAdapter(boolean filterByFavorite) {
-        ArrayList<CheckIn> defaultCheckIns = new ArrayList<>(Arrays.asList(DUMMY_CHECK_INS));
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        ArrayList<CheckIn> allCheckIns = new ArrayList<>();
-        allCheckIns.addAll(defaultCheckIns);
-
-        mCheckInArrayAdapter = new CheckInArrayAdapter(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1
-        );
-
-        if (filterByFavorite) {
-            ArrayList<CheckIn> favoriteCheckIns = new ArrayList<>();
-
-            for (int i = 0; i < defaultCheckIns.size(); i++) {
-                CheckIn checkIn = defaultCheckIns.get(i);
-
-                if (checkIn.isFavorite()) {
-                    favoriteCheckIns.add(checkIn);
-                }
-            }
-
-            mCheckInArrayAdapter.addAll(favoriteCheckIns);
-        } else {
-            mCheckInArrayAdapter.addAll(allCheckIns);
-        }
-
-        mCheckInArrayAdapter.sort(new InverseCheckInDateComparator());
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -111,7 +96,7 @@ public class CheckInListFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(mCheckInArrayAdapter.getItem(position).getId());
+            mListener.onFragmentInteraction(-1);
         }
     }
 
@@ -126,6 +111,32 @@ public class CheckInListFragment extends ListFragment {
         return fragment;
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                CheckInEntry.CONTENT_URI,
+                new String[] {
+                        CheckInEntry._ID,
+                        CheckInEntry.PLACE,
+                        CheckInEntry.DATE
+                },
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mSimpleCheckInCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mSimpleCheckInCursorAdapter.swapCursor(null);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -138,7 +149,7 @@ public class CheckInListFragment extends ListFragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(int id);
+        void onFragmentInteraction(int id);
     }
 
     private class InverseCheckInDateComparator implements Comparator<CheckIn> {
