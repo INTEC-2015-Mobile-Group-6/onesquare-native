@@ -31,6 +31,13 @@ import java.util.Date;
 public class CheckInListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getLoaderManager().restartLoader(0, getArguments(), this);
+    }
+
     private static final String ARG_IS_FILTERED_BY_FAVORITE = "is_filtered_by_favorite";
     private static final String TAG = CheckInListFragment.class.getSimpleName();
 
@@ -66,7 +73,7 @@ public class CheckInListFragment extends ListFragment
         setListAdapter(mSimpleCheckInCursorAdapter);
 
         getLoaderManager()
-                .initLoader(0, null, this);
+                .initLoader(0, getArguments(), this);
     }
 
     @Override
@@ -111,16 +118,30 @@ public class CheckInListFragment extends ListFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        boolean filterByIsFavorite = args.getBoolean(ARG_IS_FILTERED_BY_FAVORITE);
+
+        String[] projection = new String[] {
+                CheckInEntry._ID,
+                CheckInEntry.PLACE,
+                CheckInEntry.DATE
+        };
+
+        String selection = null;
+        String[] selectionArgs = null;
+
+        if (filterByIsFavorite) {
+            selection = CheckInEntry.IS_FAVORITE + " = ?";
+            selectionArgs = new String[] {
+                    "1"
+            };
+        }
+
         return new CursorLoader(
                 getActivity(),
                 CheckInEntry.CONTENT_URI,
-                new String[] {
-                        CheckInEntry._ID,
-                        CheckInEntry.PLACE,
-                        CheckInEntry.DATE
-                },
-                null,
-                null,
+                projection,
+                selection,
+                selectionArgs,
                 null
         );
     }

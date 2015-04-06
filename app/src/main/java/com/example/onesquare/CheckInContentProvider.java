@@ -8,24 +8,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.example.onesquare.model.CheckInContract.CheckInEntry;
 
 public class CheckInContentProvider extends ContentProvider {
+    private static final String TAG = CheckInContentProvider.class.getSimpleName();
+
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     private static final int CHECK_INS = 100;
-    private static final int CHECK_IN = 101;
+    private static final int CHECK_INS_FAVORITE = 101;
+
+    private static final int CHECK_IN = 200;
 
     static {
         sUriMatcher.addURI(CheckInEntry.CONTENT_AUTHORITY,
                 CheckInEntry.PATH_CHECK_IN, CHECK_INS);
         sUriMatcher.addURI(CheckInEntry.CONTENT_AUTHORITY,
                 CheckInEntry.PATH_CHECK_IN + "/#", CHECK_IN);
+        sUriMatcher.addURI(CheckInEntry.CONTENT_AUTHORITY,
+                CheckInEntry.PATH_FAVORITE, CHECK_INS_FAVORITE);
     }
 
     private SQLiteDatabase mDatabase;
@@ -94,27 +102,19 @@ public class CheckInContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
+        Log.d(TAG, "URI: " + uri);
         Cursor cursor;
 
         int match = sUriMatcher.match(uri);
 
+        // TODO-francisbrito: Update selection/sort-order based on match.
         switch (match) {
             case CHECK_INS:
-                if (TextUtils.isEmpty(sortOrder)) {
-                    sortOrder = "_ID ASC";
-                }
+                break;
+            case CHECK_INS_FAVORITE:
+                break;
             case CHECK_IN:
-                String idString = uri.getLastPathSegment();
-
-                if (selection != null && !selection.toUpperCase().contains("_ID")) {
-                    selection += " _ID = ?";
-
-                    List<String> selectionArgsList = Arrays.asList(selectionArgs);
-
-                    selectionArgsList.add(idString);
-
-                    selectionArgs = (String[]) selectionArgsList.toArray();
-                }
+                break;
         }
 
         mDatabase = mDatabaseHelper.getReadableDatabase();

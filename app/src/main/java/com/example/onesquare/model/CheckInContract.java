@@ -34,5 +34,6 @@ public final class CheckInContract {
         public static final String CONTENT_ITEM_TYPE =
                 "vnd.android.cursor.item/" + CONTENT_AUTHORITY + "/" + PATH_CHECK_IN;
 
+        public static final String PATH_FAVORITE = "is-favorite";
     }
 }
