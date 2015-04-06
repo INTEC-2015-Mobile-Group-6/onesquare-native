@@ -60,6 +60,7 @@ public class AddCheckInActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
+            System.exit(0);
             return true;
         }
 
@@ -159,7 +160,9 @@ public class AddCheckInActivity extends ActionBarActivity {
                                     CheckInEntry.CONTENT_URI,
                                     values
                             );
-                    // TODO-francisbrito: Redirect user to main activity.
+
+                    getActivity()
+                            .onBackPressed();
                 }
             });
         }

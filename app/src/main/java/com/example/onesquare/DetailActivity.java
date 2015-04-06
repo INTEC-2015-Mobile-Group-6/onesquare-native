@@ -22,9 +22,6 @@ public class DetailActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-
-
     }
 
 
@@ -44,6 +41,7 @@ public class DetailActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
+            System.exit(0);
             return true;
         }
 
