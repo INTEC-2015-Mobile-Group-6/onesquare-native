@@ -48,7 +48,7 @@ public class CheckInListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSimpleCheckInCursorAdapter = new SimpleCursorAdapter(
+        mSimpleCheckInCursorAdapter = new SimpleCheckInCursorAdapter(
                 getActivity(),
                 R.layout.check_in_item,
                 null,

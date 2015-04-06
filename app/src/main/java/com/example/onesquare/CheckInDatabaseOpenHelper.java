@@ -14,16 +14,16 @@ public class CheckInDatabaseOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + CheckInEntry.TABLE_NAME +
             "(" +
                 CheckInEntry._ID + " INTEGER PRIMARY KEY, " +
-                CheckInEntry.DATE + " DATE NOT NULL, " +
+                CheckInEntry.DATE + " TEXT NOT NULL, " +
                 CheckInEntry.PLACE + " TEXT NOT NULL, " +
                 CheckInEntry.ADDRESS + " TEXT NOT NULL, " +
                 CheckInEntry.URL + " TEXT NOT NULL, " +
                 CheckInEntry.PICTURE_URL + " TEXT NOT NULL, " +
                 CheckInEntry.IS_FAVORITE + " BOOLEAN" +
             ")";
-    private static final String SQL_DROP_CHECK_IN_TABLE = "DROP IF EXISTS " + CheckInEntry.TABLE_NAME;
+    private static final String SQL_DROP_CHECK_IN_TABLE = "DROP TABLE IF EXISTS " + CheckInEntry.TABLE_NAME;
     public static final String DATABASE_NAME = "onesquare.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
 
     public CheckInDatabaseOpenHelper(Context context, String dbName, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, dbName, factory, version);

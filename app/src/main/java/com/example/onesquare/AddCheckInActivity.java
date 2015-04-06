@@ -121,23 +121,11 @@ public class AddCheckInActivity extends ActionBarActivity {
                     String place = mPlaceEdit.getEditableText().toString();
                     String address = mAddressEdit.getEditableText().toString();
                     String dateString = mDateEdit.getEditableText().toString();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(STRING_DATE_FORMAT);
-                    Date date = null;
+//                    long date = Date.parse(dateString);
                     String urlString = mURLEdit.getEditableText().toString();
                     Uri url = Uri.parse(urlString);
                     Uri pictureUrl = mPictureURL;
                     boolean isFavorite = mIsFavoriteCheckBox.isChecked();
-
-                    try {
-                        date = dateFormat.parse(dateString);
-                    } catch (ParseException e) {
-                        Log.e(TAG, "Unable to parse date.", e);
-                    }
-
-                    CheckIn newCheckIn =
-                            CheckIn.create(place, address, date, url, pictureUrl, isFavorite);
-
-                    Log.d(TAG, "Check in created: " + newCheckIn);
 
                     Toast.makeText(
                             getActivity(),
@@ -148,7 +136,7 @@ public class AddCheckInActivity extends ActionBarActivity {
                     ContentValues values = new ContentValues();
                     values.put(CheckInEntry.PLACE, place);
                     values.put(CheckInEntry.ADDRESS, address);
-                    values.put(CheckInEntry.DATE, date.toString());
+                    values.put(CheckInEntry.DATE, dateString);
                     values.put(CheckInEntry.URL, url.toString());
                     values.put(CheckInEntry.PICTURE_URL,
                             pictureUrl == null ? "http://placehold.it/500" : pictureUrl.toString());
