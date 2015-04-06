@@ -97,6 +97,11 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void onResume(Bundle s)
+    {  // After a pause OR at startup
+        super.onResume();
+    }
+
     @Override
     public void onFragmentInteraction(int id) {
         Log.d(TAG, "selected check in id: " + id);
