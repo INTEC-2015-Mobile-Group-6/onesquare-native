@@ -40,4 +40,5 @@ public class CheckInDatabaseOpenHelper extends SQLiteOpenHelper {
 
         onCreate(db);
     }
+
 }

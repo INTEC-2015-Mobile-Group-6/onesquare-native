@@ -71,6 +71,7 @@ public class MainActivity extends ActionBarActivity
                 System.exit(0);
             case R.id.action_add:
                 openAddCheckActivity();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,6 +82,13 @@ public class MainActivity extends ActionBarActivity
 
         startActivity(intent);
     }
+
+    private void openDetailActivity(int id) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -103,8 +111,11 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onFragmentInteraction(int id) {
-        Log.d(TAG, "selected check in id: " + id);
+    public void onFragmentInteraction(int id)
+    {
+        //Log.d(TAG, "selected check in id: " + id);
+        openDetailActivity(id);
+
     }
 
     private class CheckInListPagerAdapter extends FragmentPagerAdapter {
