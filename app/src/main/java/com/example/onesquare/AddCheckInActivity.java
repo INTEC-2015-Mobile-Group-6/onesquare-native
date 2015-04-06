@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -118,9 +119,19 @@ public class AddCheckInActivity extends ActionBarActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String dateString = mDateEdit.getEditableText().toString()
+                            .replace('-','/').replace('.', '/');
+                    if(!validarFecha(dateString)){
+                        Toast.makeText(
+                                getActivity(),
+                                R.string.message_check_in_invalid_date,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        return;
+                    }
                     String place = mPlaceEdit.getEditableText().toString();
                     String address = mAddressEdit.getEditableText().toString();
-                    String dateString = mDateEdit.getEditableText().toString();
 //                    long date = Date.parse(dateString);
                     String urlString = mURLEdit.getEditableText().toString();
                     Uri url = Uri.parse(urlString);
@@ -153,6 +164,21 @@ public class AddCheckInActivity extends ActionBarActivity {
                             .onBackPressed();
                 }
             });
+        }
+
+        private boolean validarFecha(String date)
+        {
+            SimpleDateFormat  format =
+                    new SimpleDateFormat ("MM/dd/yyyy");
+            format.setLenient((false));
+            try {
+                Date parsed = format.parse(date);
+                return true;
+            }
+            catch (ParseException pe)
+            {
+                return false;
+            }
         }
 
         private void setUpClearButton(Button clearButton) {
