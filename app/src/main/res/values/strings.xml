@@ -26,4 +26,5 @@
     <string name="add_check_in_save_button_text">Save</string>
     <string name="add">Add</string>
     <string name="message_check_in_created">Check in created successfully.</string>
+    <string name="splash_screen">OneSquare</string>
 </resources>
