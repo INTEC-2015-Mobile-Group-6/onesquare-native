@@ -20,7 +20,7 @@ import android.view.MenuItem;
  *
  * SPLASH: Aunque no pude quitarle la barra de arriba, Alguna idea de como hacerlo? Intente cambiarle el tema (solo al splash), pero explotaba.
  */
-public class splash extends MainActivity {
+public class splash extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
