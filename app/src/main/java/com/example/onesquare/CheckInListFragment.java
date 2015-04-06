@@ -52,23 +52,21 @@ public class CheckInListFragment extends ListFragment
                 getActivity(),
                 R.layout.check_in_item,
                 null,
-                new String[] {
+                new String[]{
                         CheckInEntry.PLACE,
                         CheckInEntry.DATE
                 },
-                new int[] {
+                new int[]{
                         R.id.check_in_place,
                         R.id.check_in_date
                 },
                 0
         );
-    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        setListAdapter(mSimpleCheckInCursorAdapter);
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager()
+                .initLoader(0, null, this);
     }
 
     @Override
@@ -150,18 +148,5 @@ public class CheckInListFragment extends ListFragment
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(int id);
-    }
-
-    private class InverseCheckInDateComparator implements Comparator<CheckIn> {
-        private static final int INVERSE_QUANTIFIER = -1;
-
-        @Override
-        public int compare(CheckIn c1, CheckIn c2) {
-            Date checkInDate1 = c1.getDate();
-            Date checkInDate2 = c2.getDate();
-
-            return checkInDate1.compareTo(checkInDate2)
-                    * INVERSE_QUANTIFIER;
-        }
     }
 }

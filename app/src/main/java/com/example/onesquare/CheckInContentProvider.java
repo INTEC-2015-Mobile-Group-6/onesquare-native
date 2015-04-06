@@ -62,8 +62,21 @@ public class CheckInContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        long checkInId = -1;
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case CHECK_INS:
+                mDatabase = mDatabaseHelper.getWritableDatabase();
+
+                checkInId = mDatabase.insert(
+                        CheckInEntry.TABLE_NAME,
+                        null,
+                        values
+                );
+        }
+
+        return uri.withAppendedPath(uri, String.valueOf(checkInId));
     }
 
     @Override
