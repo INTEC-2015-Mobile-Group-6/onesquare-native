@@ -2,4 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="com.example.onesquare.DetailActivity" tools:ignore="MergeRootFrame" >
+<<<<<<< HEAD
+=======
+
+    TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ALL DETAIL"
+        android:id="@+id/textView2"
+        android:layout_gravity="center" />
+>>>>>>> 05a68a6178158f82ef372edc30be7da766176049
 </FrameLayout>

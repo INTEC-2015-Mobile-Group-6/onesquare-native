@@ -1,28 +1,56 @@
 package com.example.onesquare;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.Toast;
+=======
+import android.widget.TextView;
+
+import com.example.onesquare.model.CheckInContract;
+
+import org.w3c.dom.Text;
+>>>>>>> 05a68a6178158f82ef372edc30be7da766176049
 
 
 public class DetailActivity extends Activity {
 
+    TextView details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        //details = (TextView) findViewById(R.layout.placename);
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        Bundle args = getIntent().getExtras();
+        args.getInt("id");
+
+        Cursor detailCursor = getContentResolver().query(CheckInContract.CheckInEntry.CONTENT_URI, null, null, null, null);
+
+        detailCursor.moveToFirst();
+
+        if(args != null)
+        {
+
+           // detail.setText(detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.PLACE)).toString());
+        }
+
+
     }
 
     @Override
@@ -65,7 +93,10 @@ public class DetailActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+            TextView detail = (TextView) rootView.findViewById(R.id.placename);
             return rootView;
         }
-    }
+
+
+        }
 }
