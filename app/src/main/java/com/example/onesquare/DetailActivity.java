@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.onesquare.model.CheckIn;
 import com.example.onesquare.model.CheckInContract;
 
 import org.w3c.dom.Text;
@@ -25,7 +26,7 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        //details = (TextView) findViewById(R.layout.placename);
+        details = (TextView) findViewById(R.id.detailtext);
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -34,16 +35,55 @@ public class DetailActivity extends Activity {
         }
 
         Bundle args = getIntent().getExtras();
-        args.getInt("id");
+        int checkInId = args.getInt("id");
 
-        Cursor detailCursor = getContentResolver().query(CheckInContract.CheckInEntry.CONTENT_URI, null, null, null, null);
+        String selection = CheckInContract.CheckInEntry._ID + " = ?";
+        String[] selectionArgs = new String[] {
+                String.valueOf(checkInId)
+        };
+
+        Cursor detailCursor = getContentResolver()
+                .query(
+                        CheckInContract.CheckInEntry.CONTENT_URI, null,
+                        selection,
+                        selectionArgs,
+                        null
+                );
 
         detailCursor.moveToFirst();
 
         if(args != null)
         {
 
-           // detail.setText(detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.PLACE)).toString());
+
+            if (detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.IS_FAVORITE)).toString() == "TRUE")
+            {
+                details.setText(detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.PLACE)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.ADDRESS)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.DATE)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.URL)).toString()
+                                +"\n"+
+                                "Es favorito."
+                );
+
+            }
+
+            else {
+                details.setText(detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.PLACE)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.ADDRESS)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.DATE)).toString()
+                                +"\n"+
+                                detailCursor.getString(detailCursor.getColumnIndex(CheckInContract.CheckInEntry.URL)).toString()
+                );
+
+            }
+
+
         }
 
 
@@ -85,7 +125,7 @@ public class DetailActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            TextView detail = (TextView) rootView.findViewById(R.id.placename);
+           // TextView detail = (TextView) rootView.findViewById(R.id.placename);
             return rootView;
         }
 

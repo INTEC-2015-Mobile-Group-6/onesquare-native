@@ -100,8 +100,12 @@ public class CheckInListFragment extends ListFragment
 
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(-1);
+            //
+
+            Cursor c = getActivity().getContentResolver().query(CheckInContract.CheckInEntry.CONTENT_URI,null,null,null,null);
+            c.moveToPosition(position);
+
+            mListener.onFragmentInteraction(c.getInt(c.getColumnIndex(CheckInEntry._ID)));
         }
     }
 

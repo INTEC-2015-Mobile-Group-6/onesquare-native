@@ -113,7 +113,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onFragmentInteraction(int id)
     {
-        //Log.d(TAG, "selected check in id: " + id);
+        Log.d(TAG, "selected check in id: " + id);
         openDetailActivity(id);
 
     }
